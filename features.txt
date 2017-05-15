@@ -1,0 +1,16 @@
+PoS:
+1	N
+2	Adj
+3	V
+4	Adv
+5	Pron
+6	Conj
+7	P
+8	Ptcl
+9	Aux
+10	Num
+11	Prv
+12	Loc
+13	Conn
+14	Part
+15	Null
