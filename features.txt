@@ -1,16 +1,86 @@
-PoS:
 1	N
 2	Adj
-3	V
-4	Adv
-5	Pron
-6	Conj
-7	P
-8	Ptcl
-9	Aux
-10	Num
-11	Prv
-12	Loc
-13	Conn
-14	Part
-15	Null
+3	Ptcl
+4	V
+5	Aux
+
+
+mi
+ḫḫi
+ḫḫa
+ḫari
+ši
+ti
+šti
+tta
+zzi
+zi
+ttari
+ari
+wašta
+waštari
+tteni
+šteni
+ttuma
+ttumari
+anzi
+anta
+antari
+un
+ḫḫun
+ḫat
+ḫadi
+šta
+ttat
+ttadi
+at
+wen 
+waštat
+šten
+er
+ir
+ar
+antadi
+antat
+llu
+lit
+lut
+ḫḫaru
+i
+ḫḫut
+ḫḫudi
+ttu
+u
+ttaru
+aru
+weni
+waštadi
+tten
+ttumat
+ttumadi
+antu
+antaru
+š
+eš 
+Ø
+a
+n
+uš 
+aš
+z
+za
+t
+war
+umar
+adar
+waš
+umaš
+annaš
+wanzi
+umanzi
+anna
+wan
+
+šk
+ške
+ant
