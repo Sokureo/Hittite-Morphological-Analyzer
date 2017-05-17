@@ -4,16 +4,18 @@ import re
 import numpy as np
 import closed_class
 import train_set
+import word_order
 
 
 def pos():
     closed = closed_class.Closed()  # гениально
-    print(closed.connector)
 
     return closed
 
+
 def main():
-    #train_set.make_train_set()
+    word_order.word_order() # проставляем порядковый номер слова в обучающем материале
+    train_matrix = train_set.make_train_set() # делаем обучающую матрицу
 
     pos()
 

@@ -1,5 +1,5 @@
 class Closed:
-    attrs = ['adverb', 'compliment', 'conjunct', 'connector', 'preverb', 'pronoun', 'q_word']
+    attrs = ['P', 'PART', 'ADV', 'CONJ', 'CONN', 'PRON', 'fragment', 'REL', 'PRV', 'POST', 'NEG', 'INDEF', 'Q', 'DEM', 'POSS', 'NUM']
     def __init__(self):
         self.adverb = {i.split()[0]: i.split()[1] for i in
                            open('../closed_class/Closed_lists_adverbs.txt').read().split('\n') if i != ''}
@@ -15,3 +15,5 @@ class Closed:
                            open('../closed_class/Closed_lists_pronouns.txt').read().split('\n') if i != ''}
         self.q_word = {i.split()[0]: i.split()[1] for i in
                            open('../closed_class/Closed_lists_q-words.txt').read().split('\n') if i != ''}
+        self.fragment = {i.split()[0]: i.split()[1] for i in
+                       open('../closed_class/Closed_lists_fragment.txt').read().split('\n') if i != ''}

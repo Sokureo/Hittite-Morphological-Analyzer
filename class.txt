@@ -1,0 +1,5 @@
+1 N
+2 ADJ
+3 PTCP
+4 V
+5 AUX

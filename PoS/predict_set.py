@@ -12,7 +12,7 @@ def make_predict_set():
     for fname in fname_list: # для каждого файла
 
         print('processing ' + fname + '\n')
-        #os.system('/usr/bin/libreoffice --convert-to xml ../predict/ --outdir ./predict/ ../predict/' + fname) # конвертируем в .xml
+        #os.system('libreoffice --convert-to xml --outdir ./predict/ ../predict/' + fname) # конвертируем в .xml
         # результат положится в папку predict в данной дериктории
 
         #soup = BeautifulSoup(open('./predict/' + fname.replace('xlsx', 'xml')), 'xml')  # читаем дерево

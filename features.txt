@@ -1,10 +1,3 @@
-1	N
-2	Adj
-3	Ptcl
-4	V
-5	Aux
-
-
 mi
 ḫḫi
 ḫḫa
@@ -80,7 +73,6 @@ wanzi
 umanzi
 anna
 wan
-
 šk
 ške
 ant
