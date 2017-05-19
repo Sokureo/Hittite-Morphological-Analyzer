@@ -44,18 +44,18 @@ def make_train_set(): # делаем обучающий сет
                     train_word_list.append(row[5].strip('!: ')) # добавляем слово
                     for feat in features: # добавляем его признаки
                         if row[5].strip('!: ').endswith(feat):
-                            example.append(1) # есть признак
+                            example.append(1.0) # есть признак
                         else:
-                            example.append(0) # нет признака
-                    example.append(row[10]) # добавляем номер в предложении
+                            example.append(0.0) # нет признака
+                    example.append(float(row[10])) # добавляем номер в предложении
                     train_tag_list.append(speach_class[row[8].strip()]) # порядковый номер правильной части речи
                     train_features_set.append(example) # получаем матрицу из примеров
 
-    train_features_set = np.array(train_features_set)
-    train_tag_list = np.array(train_tag_list)
+    X = np.array(train_features_set)
+    y = np.array(train_tag_list)
 
-    print('train_matrix made')
+    print('train_matrix made' + '\n')
 
-    return train_features_set, train_tag_list
+    return X, y
 
 
