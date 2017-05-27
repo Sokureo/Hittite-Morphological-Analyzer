@@ -1,91 +1,91 @@
 import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib import style
-style.use('ggplot')
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score
-from sklearn.model_selection import KFold
+from sklearn.svm import SVC
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import SGDClassifier
+from seqlearn.hmm import MultinomialHMM
 import train_set
-import word_order
+import predict_set
 
 
-def get_estimation(algorithm, X_train, X_test, y_train, y_test):
-    # считаем всякие оценки
-    algorithm.fit(X_train, y_train)
-    y_pred = algorithm.predict(X_test)
-    accuracy = accuracy_score(y_test, y_pred)
-
-    return accuracy
-
-
-def knn_pred(n, X_train, X_test, y_train, y_test):
+def knn_pred(X, y):
     # k ближайших соседей
-    knn = KNeighborsClassifier(n_neighbors=n, metric='euclidean')
-    knn_estimation = get_estimation(knn, X_train, X_test, y_train, y_test)
-    return knn_estimation
+    knn = KNeighborsClassifier(n_neighbors=11, metric='euclidean')
+    knn.fit(X, y)
+    return knn
 
 
-def lr_pred(с, X_train, X_test, y_train, y_test):
+def lr_pred(X, y):
     # логистическая регрессия
-    lr = LogisticRegression(penalty="l2", fit_intercept=True, max_iter=100, C=с, solver="lbfgs", random_state=12345)
-    lr_estimation = get_estimation(lr, X_train, X_test, y_train, y_test)
-    return lr_estimation
+    lr = LogisticRegression(penalty="l2", fit_intercept=True, max_iter=100, C=27, solver="lbfgs")
+    lr.fit(X, y)
+    return lr
 
 
-def kfolds_validation(model, param, X, y):
-    # кросс-валидация
-    kf = KFold(n_splits=4, shuffle = True, random_state=12345)
-    estimations = []
-
-    for train, test in kf.split(X):
-        X_train, X_test, y_train, y_test = X[train], X[test], y[train], y[test]
-        estimations.append(model(param, X_train, X_test, y_train, y_test))
-
-    estimation = np.array(estimations).mean() # средняя оценка по фолдам
-
-    return estimation
+def svm_pred(X, y):
+    # метод опорных векторов
+    svm = SVC(C=500)
+    svm.fit(X, y)
+    return svm
 
 
-def get_params_dic(model, params, X, y):
-    # создаём словарь, где ключи -- параметр, а значения -- оценка при этом параметре
-    estimations = {}
-
-    for param in params:
-        estimations[param] = kfolds_validation(model, param, X, y)
-
-    return estimations
+def dtree_pred(X, y):
+    # решающие деревья
+    dtree = DecisionTreeClassifier(max_depth=21)
+    dtree.fit(X, y)
+    return dtree
 
 
-def create_plot(model, estimatiom):
-    # строим график зависимости параметра и оценки
-    plt.bar(range(len(estimatiom)), [value for value in estimatiom.values()])
-    plt.xticks(range(len(estimatiom)), [key for key in estimatiom.keys()], rotation='vertical')
-    plt.title(model + ' accuracy')
-    plt.xlabel('Hyperparameters')
-    plt.ylabel('Accuracy')
-    plt.tight_layout()
-    plt.savefig('./graphs/' + model + ' accuracy')
-    plt.close()
-    print(model + ' plot created\n')
+def rforest_pred(X, y):
+    # случайный лес
+    rforest = RandomForestClassifier(n_estimators=31)
+    rforest.fit(X, y)
+    return rforest
+
+
+def sgd_pred(X, y):
+    # метод стохастического градиента
+    sgd = SGDClassifier(alpha=0.005)
+    sgd.fit(X, y)
+    return sgd
+
+
+def hmm_pred(X, y):
+    # скрытая марковская модель
+    hmm = MultinomialHMM(alpha=0.1)
+    hmm.fit(X, y, lengths=np.array([1 for i in y]))
+
+    return hmm
 
 
 def pos_tagger():
 
-    #word_order.word_order() # проставляем порядковый номер слова в обучающем материале
     X, y = train_set.make_train_set() # делаем обучающую матрицу
 
-    ns = np.arange(1, 150, 10)  # количество соседей
-    cs = np.logspace(-2, 10, 8, base=10)  # параметр регуляризации
+    knn = knn_pred(X, y)
+    print("got knn")
 
-    knn_estimation = get_params_dic(knn_pred, ns, X, y)
-    print('knn accuracy: ' + '\n', '\n'.join(['{}: {}'.format(key, knn_estimation[key]) for key in knn_estimation]), '\n')
-    create_plot('knn algorithm', knn_estimation)
+    lr = lr_pred(X, y)
+    print("got logreg")
 
+    svm = svm_pred(X, y)
+    print("got svm")
 
-    lr_estimation = get_params_dic(lr_pred, cs, X, y)
-    print('log reg accuracy: ' + '\n', '\n'.join(['{}: {}'.format(key, lr_estimation[key]) for key in lr_estimation]), '\n')
-    create_plot('log regression algorithm', lr_estimation)
+    dtree = dtree_pred(X, y)
+    print("got decision tree")
+
+    rforest = rforest_pred(X, y)
+    print("got random forest")
+
+    sgd = sgd_pred(X, y)
+    print("got sgd")
+
+    hmm= hmm_pred(X, y)
+    print("got hmm")
+
+    return knn, lr, svm, dtree, rforest, sgd, hmm
 
 
 def main():

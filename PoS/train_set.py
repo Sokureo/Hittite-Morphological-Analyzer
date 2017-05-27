@@ -9,7 +9,7 @@ def make_train_set(): # делаем обучающий сет
 
     closed = closed_class.Closed()
     # считываем класс закрытых классов
-    speach_class = {i.split()[1]: i.split()[0] for i in open('../class.txt').read().split('\n') if i != ''}
+    speech_class = {i.split()[1]: i.split()[0] for i in open('../class.txt').read().split('\n') if i != ''}
     # считываем части речи с их порядковым номером в словарь
     features = open('../features.txt').read().split()
     # считываем признаки
@@ -39,16 +39,16 @@ def make_train_set(): # делаем обучающий сет
 
         for row in row_list:
             if row[0] != '':
-                if len(row) > 8 and row[8].strip() in speach_class.keys():
+                if len(row) > 8 and row[8].strip() in speech_class.keys():
                     example = []
-                    train_word_list.append(row[5].strip('!: ')) # добавляем слово
+                    train_word_list.append(row[5].strip('!: ').lower()) # добавляем слово
                     for feat in features: # добавляем его признаки
-                        if row[5].strip('!: ').endswith(feat):
+                        if row[5].strip('!: ').lower().endswith(feat):
                             example.append(1.0) # есть признак
                         else:
                             example.append(0.0) # нет признака
                     example.append(float(row[10])) # добавляем номер в предложении
-                    train_tag_list.append(speach_class[row[8].strip()]) # порядковый номер правильной части речи
+                    train_tag_list.append(speech_class[row[8].strip()]) # порядковый номер правильной части речи
                     train_features_set.append(example) # получаем матрицу из примеров
 
     X = np.array(train_features_set)
